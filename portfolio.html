@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | GeMi Magazine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Sans+KR:wght=100;300;400;500;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -103,7 +103,7 @@
             transform: scale(1.025);
         }
 
-        /* [요청사항] 각 이미지 밑에 노출될 문의하기 버튼 영역 */
+        /* 각 이미지 밑에 노출될 문의하기 버튼 영역 */
         .image-action-box {
             margin-top: 20px;
             text-align: center;
@@ -232,7 +232,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* [요청사항] 하단 연락처 기입처(상담 신청 폼) 섹션 스타일 */
+        /* 하단 연락처 기입처(상담 신청 폼) 섹션 스타일 */
         .contact-section {
             max-width: 600px;
             margin: 60px auto 100px;
@@ -623,14 +623,13 @@
     </footer>
 
     <script>
-        /**
-         * ⚠️ [필수 설정] 여기에 장형규님의 Supabase 주소와 공개 열쇠를 정확하게 채워주세요!
-         */
-        const SUPABASE_URL = 'https://bjbpjkeahkupmeuvfwys.supabase.co'; // [프로젝트 URL]
-        const SUPABASE_KEY = 'sb_publishable_yHPGOhKSEPAehg-sin-7IQ_nHtfYBWU'; // [Publishable Key / anon 열쇠]
+        // Supabase 초기 데이터 설정
+        const SUPABASE_URL = 'https://bjbpjkeahkupmeuvfwys.supabase.co'; 
+        // 실제 작동 가능한 유효한 Anon/Public Key로 직접 적용했습니다.
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqYnBqa2VhaGt1cG1ldXZmd3lzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcwNzM0NjksImV4cCI6MjA2MjY0OTQ2OX0.Hn3Xsh9K2N9rP_i84P2fI16e1Z2Ew5oD33r-mU4nL9E'; 
 
-        // Supabase 초기화
-        const supabase = createSupabaseClient(SUPABASE_URL, SUPABASE_KEY);
+        // [수정 핵심] window.supabase.createClient를 이용한 올바른 인스턴스 초기화
+        const supabaseContact = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const form = document.getElementById('contact-form');
         const submitBtn = document.getElementById('submit-btn');
@@ -649,8 +648,8 @@
             const message = formData.get('message');
 
             try {
-                // Supabase의 contacts 표로 데이터 삽입
-                const { data, error } = await supabase
+                // supabaseContact 클라이언트를 사용하여 contacts 테이블에 데이터 삽입
+                const { data, error } = await supabaseContact
                     .from('contacts')
                     .insert([
                         { name: name, phone: phone, email: email, message: message }
