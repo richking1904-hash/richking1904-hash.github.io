@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | GeMi Magazine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Sans+KR:wght=100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
 
     <style>
         /* 기본 프리셋 및 폰트 세팅 */
@@ -569,7 +569,7 @@
                 <div class="capability-box">
                     <div class="capability-title">Available Services</div>
                     <ul class="capability-list">
-                        <li>브랜드 공식 계정 연재용 맞춤형 브랜디드 인스타툰 기획 및 작화</li>
+                        <li>brand 공식 계정 연재용 맞춤형 브랜디드 인스타툰 기획 및 작화</li>
                         <li>복잡한 가이드북이나 일상 툰 형식의 스토리 가공 및 콘티 구성</li>
                         <li>소셜 미디어 채널의 인터랙션 유도형 기획 설계</li>
                     </ul>
@@ -623,13 +623,21 @@
     </footer>
 
     <script>
-        // Supabase 초기 데이터 설정
+        // Supabase 설정 및 초기화
         const SUPABASE_URL = 'https://bjbpjkeahkupmeuvfwys.supabase.co'; 
-        // 실제 작동 가능한 유효한 Anon/Public Key로 직접 적용했습니다.
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqYnBqa2VhaGt1cG1ldXZmd3lzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcwNzM0NjksImV4cCI6MjA2MjY0OTQ2OX0.Hn3Xsh9K2N9rP_i84P2fI16e1Z2Ew5oD33r-mU4nL9E'; 
+        const SUPABASE_KEY = 'sb_publishable_yHPGOhKSEPAehg-sin-7IQ_nHtfYBWU'; 
 
-        // [수정 핵심] window.supabase.createClient를 이용한 올바른 인스턴스 초기화
-        const supabaseContact = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // 전역 충돌을 막기 위해 엄격하게 Supabase Client 초기화 진행
+        let supabaseClient;
+        try {
+            if (window.supabase && typeof window.supabase.createClient === 'function') {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            } else {
+                console.error("Supabase CDN이 올바르게 로드되지 않았습니다.");
+            }
+        } catch (initError) {
+            console.error("Supabase 초기화 중 에러 발생:", initError);
+        }
 
         const form = document.getElementById('contact-form');
         const submitBtn = document.getElementById('submit-btn');
@@ -637,6 +645,12 @@
         // 전송 이벤트 핸들러
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // 클라이언트 초기화 실패 예외 처리
+            if (!supabaseClient) {
+                alert('데이터베이스 연결 설정에 문제가 발생했습니다. 페이지를 새로고침 해보세요.');
+                return;
+            }
 
             submitBtn.disabled = true;
             submitBtn.innerText = 'SENDING...';
@@ -648,12 +662,13 @@
             const message = formData.get('message');
 
             try {
-                // supabaseContact 클라이언트를 사용하여 contacts 테이블에 데이터 삽입
-                const { data, error } = await supabaseContact
+                // contacts 테이블에 정보 추가 시도
+                const { data, error } = await supabaseClient
                     .from('contacts')
                     .insert([
                         { name: name, phone: phone, email: email, message: message }
-                    ]);
+                    ])
+                    .select(); // 데이터 전송 결과를 명시적으로 받아와서 유효성을 검증합니다.
 
                 if (error) {
                     console.error('Database Error:', error);
