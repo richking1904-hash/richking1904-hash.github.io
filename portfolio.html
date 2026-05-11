@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | GeMi Magazine</title>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         /* 기본 프리셋 및 폰트 세팅 */
         * {
@@ -98,6 +101,35 @@
         /* 마우스 호버 시 부드러운 확대 */
         .img-box:hover img {
             transform: scale(1.025);
+        }
+
+        /* [요청사항] 각 이미지 밑에 노출될 문의하기 버튼 영역 */
+        .image-action-box {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* 이미지 아래에 위치할 고급스러운 세리프/라벨 무드의 버튼 */
+        .btn-consult {
+            display: inline-block;
+            text-decoration: none;
+            color: #1a1a1a;
+            border: 1px solid #1a1a1a;
+            background-color: transparent;
+            padding: 12px 30px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-consult:hover {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
         /* 텍스트 컨테이너 */
@@ -200,6 +232,98 @@
             letter-spacing: 0.5px;
         }
 
+        /* [요청사항] 하단 연락처 기입처(상담 신청 폼) 섹션 스타일 */
+        .contact-section {
+            max-width: 600px;
+            margin: 60px auto 100px;
+            padding: 50px 30px;
+            border: 1px solid #1a1a1a;
+            background-color: #ffffff;
+            border-radius: 4px;
+        }
+
+        .contact-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-subtitle {
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            background-color: #ffffff;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.9rem;
+            color: #1a1a1a;
+            border-radius: 0; /* 각진 미니멀 디자인 유지 */
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #1a1a1a;
+            outline: none;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        /* 전송 버튼 스타일 */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 1px solid #1a1a1a;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #ffffff;
+            color: #1a1a1a;
+        }
+
+        .btn-submit:disabled {
+            background-color: #999;
+            border-color: #999;
+            color: #eee;
+            cursor: not-allowed;
+        }
+
         /* 하단 장식선 및 돌아가기 버튼 */
         footer {
             text-align: center;
@@ -249,6 +373,7 @@
             header { padding-top: 60px; }
             h1 { font-size: 2rem; }
             .container { padding-top: 40px; }
+            .contact-section { padding: 35px 20px; }
         }
     </style>
 </head>
@@ -263,8 +388,13 @@
     <div class="container">
 
         <section class="portfolio-section">
-            <div class="img-box">
-                <img src="상세페이지.jpg" alt="Cosmetic Brand Landing Page Detail Design">
+            <div class="img-container">
+                <div class="img-box">
+                    <img src="상세페이지.jpg" alt="Cosmetic Brand Landing Page Detail Design">
+                </div>
+                <div class="image-action-box">
+                    <a href="#quick-contact" class="btn-consult">Case 01 상담하기</a>
+                </div>
             </div>
             <div class="text-box">
                 <span class="num-tag">Case 01</span>
@@ -315,14 +445,24 @@
                     <span class="tag">Instagram</span>
                 </div>
             </div>
-            <div class="img-box">
-                <img src="portfolio-trend.jpg" alt="Social Media Card News Editorial Design">
+            <div class="img-container">
+                <div class="img-box">
+                    <img src="portfolio-trend.jpg" alt="Social Media Card News Editorial Design">
+                </div>
+                <div class="image-action-box">
+                    <a href="#quick-contact" class="btn-consult">Case 02 상담하기</a>
+                </div>
             </div>
         </section>
 
         <section class="portfolio-section">
-            <div class="img-box">
-                <img src="portfolio-health.jpg" alt="Naver Blog Health Information Thumbnail Design">
+            <div class="img-container">
+                <div class="img-box">
+                    <img src="portfolio-health.jpg" alt="Naver Blog Health Information Thumbnail Design">
+                </div>
+                <div class="image-action-box">
+                    <a href="#quick-contact" class="btn-consult">Case 03 상담하기</a>
+                </div>
             </div>
             <div class="text-box">
                 <span class="num-tag">Case 03</span>
@@ -373,14 +513,24 @@
                     <span class="tag">Messenger Sticker</span>
                 </div>
             </div>
-            <div class="img-box">
-                <img src="이모티콘.jpg" alt="Character Emoticon Asset Board Design">
+            <div class="img-container">
+                <div class="img-box">
+                    <img src="이모티콘.jpg" alt="Character Emoticon Asset Board Design">
+                </div>
+                <div class="image-action-box">
+                    <a href="#quick-contact" class="btn-consult">Case 04 상담하기</a>
+                </div>
             </div>
         </section>
 
         <section class="portfolio-section">
-            <div class="img-box">
-                <img src="스티커.jpg" alt="Naver OGQ Character Sticker Market Sale History Design">
+            <div class="img-container">
+                <div class="img-box">
+                    <img src="스티커.jpg" alt="Naver OGQ Character Sticker Market Sale History Design">
+                </div>
+                <div class="image-action-box">
+                    <a href="#quick-contact" class="btn-consult">Case 05 상담하기</a>
+                </div>
             </div>
             <div class="text-box">
                 <span class="num-tag">Case 05</span>
@@ -431,9 +581,39 @@
                     <span class="tag">Storytelling</span>
                 </div>
             </div>
-            <div class="img-box">
-                <img src="인스타툰.jpg" alt="Instagram Toon Series Graphic Design">
+            <div class="img-container">
+                <div class="img-box">
+                    <img src="인스타툰.jpg" alt="Instagram Toon Series Graphic Design">
+                </div>
+                <div class="image-action-box">
+                    <a href="#quick-contact" class="btn-consult">Case 06 상담하기</a>
+                </div>
             </div>
+        </section>
+
+        <section id="quick-contact" class="contact-section">
+            <h2 class="contact-title">Quick Inquiry</h2>
+            <p class="contact-subtitle">프로젝트 의뢰 및 디자인 제휴를 위한 빠른 문의처입니다.</p>
+            
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">성함 / 기업명</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="성함 또는 단체명을 입력해 주세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">연락처</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="010-0000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">이메일 주소</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="yourname@domain.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">문의 사항 및 요구 사항</label>
+                    <textarea id="message" name="message" class="form-input form-textarea" placeholder="원하시는 작업 규모, 일정 등을 자유롭게 기재해 주세요" required></textarea>
+                </div>
+                <button type="submit" id="submit-btn" class="btn-submit">SUBMIT DIRECTLY</button>
+            </form>
         </section>
 
     </div>
@@ -442,5 +622,55 @@
         <a href="index.html" class="back-link">Back to Profile</a>
     </footer>
 
+    <script>
+        /**
+         * ⚠️ [필수 설정] 여기에 장형규님의 Supabase 주소와 공개 열쇠를 정확하게 채워주세요!
+         */
+        const SUPABASE_URL = 'https://bjbpjkeahkupmeuvfwys.supabase.co'; // [프로젝트 URL]
+        const SUPABASE_KEY = 'sb_publishable_yHPGOhKSEPAehg-sin-7IQ_nHtfYBWU'; // [Publishable Key / anon 열쇠]
+
+        // Supabase 초기화
+        const supabase = createSupabaseClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const form = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // 전송 이벤트 핸들러
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'SENDING...';
+
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const email = formData.get('email');
+            const message = formData.get('message');
+
+            try {
+                // Supabase의 contacts 표로 데이터 삽입
+                const { data, error } = await supabase
+                    .from('contacts')
+                    .insert([
+                        { name: name, phone: phone, email: email, message: message }
+                    ]);
+
+                if (error) {
+                    console.error('Database Error:', error);
+                    alert('상담 신청 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+                } else {
+                    alert('🎉 문의가 성공적으로 전달되었습니다! 신속하게 답변 드리겠습니다.');
+                    form.reset();
+                }
+            } catch (err) {
+                console.error('Network Error:', err);
+                alert('네트워크 오류가 발생했습니다. 연결을 다시 확인해 주세요.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'SUBMIT DIRECTLY';
+            }
+        });
+    </script>
 </body>
 </html>
