@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | GeMi Magazine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 프리셋 및 폰트 세팅 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #ffffff;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #1a1a1a;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 매거진 스타일 마스터 헤더 */
+        header {
+            padding: 100px 20px 60px;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand-logo {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.85rem;
+            letter-spacing: 6px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: -1.5px;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        .header-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 15px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        /* 포트폴리오 섹션 레이아웃 (좌우 교차 비대칭 그리드) */
+        .portfolio-section {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 140px;
+        }
+
+        /* 우측 정렬용 리버스 스타일 */
+        .portfolio-section.reverse {
+            grid-template-columns: 0.9fr 1.1fr;
+        }
+
+        /* 이미지 컨테이너 및 호버 애니메이션 */
+        .img-box {
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
+            background-color: #fafafa;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* 마우스 호버 시 부드러운 확대 */
+        .img-box:hover img {
+            transform: scale(1.025);
+        }
+
+        /* 텍스트 컨테이너 */
+        .text-box {
+            padding: 20px 10px;
+        }
+
+        .num-tag {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.9rem;
+            color: #999;
+            font-style: italic;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .project-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #1a1a1a;
+            display: inline-block;
+            padding-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            line-height: 1.9;
+            color: #555;
+            word-break: keep-all;
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        /* 실무 수행 능력 (Capabilities) 박스 스타일 - 미니멀 라인 정리 */
+        .capability-box {
+            border-top: 1px solid #e5e5e5;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 20px 0;
+            margin-bottom: 25px;
+        }
+
+        .capability-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .capability-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .capability-list li {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+            padding-left: 12px;
+            position: relative;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .capability-list li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: #999;
+        }
+
+        .capability-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 실적/강점 강조를 위한 볼드체 */
+        .highlight {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            border: 1px solid #ddd;
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 하단 장식선 및 돌아가기 버튼 */
+        footer {
+            text-align: center;
+            padding: 80px 20px 120px;
+            border-top: 1px solid #eee;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            border: 1px solid #1a1a1a;
+            padding: 16px 45px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            background-color: #1a1a1a;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* 태블릿 및 모바일 최적화 반응형 디자인 */
+        @media (max-width: 992px) {
+            .portfolio-section, .portfolio-section.reverse {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                margin-bottom: 100px;
+            }
+            .portfolio-section.reverse .text-box {
+                order: 2; /* 모바일에서 텍스트가 항상 이미지 아래에 오도록 설정 */
+            }
+            .portfolio-section.reverse .img-box {
+                order: 1;
+            }
+            h1 { font-size: 2.5rem; }
+            .project-title { font-size: 1.7rem; }
+        }
+
+        @media (max-width: 480px) {
+            header { padding-top: 60px; }
+            h1 { font-size: 2rem; }
+            .container { padding-top: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-logo">GeMi Studio</div>
+        <h1>Selected Works</h1>
+        <p class="header-desc">감각적인 미니멀리즘과 브랜드 스토리를 연결하는 비주얼 포트폴리오</p>
+    </header>
+
+    <div class="container">
+
+        <section class="portfolio-section">
+            <div class="img-box">
+                <img src="상세페이지.jpg" alt="Cosmetic Brand Landing Page Detail Design">
+            </div>
+            <div class="text-box">
+                <span class="num-tag">Case 01</span>
+                <h2 class="project-title">E-Commerce Detail Page</h2>
+                <p class="project-desc">
+                    감각적이고 세련된 레이아웃을 통해 브랜드 아이덴티티를 명확히 전달하는 고해상도 상세페이지 디자인입니다. 
+                    화장품 브랜드 'MUI(GEMII)'의 비건 인증 핸드 테라피 제품 컨셉에 맞춰 차분하고 정돈된 무드의 컬러톤과 완성도 높은 그리드 설계를 적용했습니다.
+                </p>
+                
+                <div class="capability-box">
+                    <div class="capability-title">Available Services</div>
+                    <ul class="capability-list">
+                        <li>화장품, 가전, 리빙 등 다양한 카테고리의 맞춤형 상세페이지 디자인</li>
+                        <li>감도 높은 프리미엄 톤앤매너 기획 및 컬러 조합 제안</li>
+                        <li>브랜드 가치를 돋보이게 하는 고품질 연출컷 목업 합성</li>
+                    </ul>
+                </div>
+
+                <div class="project-tags">
+                    <span class="tag">Detail Page</span>
+                    <span class="tag">Cosmetics</span>
+                    <span class="tag">E-Commerce</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio-section reverse">
+            <div class="text-box">
+                <span class="num-tag">Case 02</span>
+                <h2 class="project-title">Trend Card News</h2>
+                <p class="project-desc">
+                    소셜 미디어 상에서 폭발적인 반응과 참여를 유도하도록 세밀하게 기획된 인스타그램 카드뉴스 디자인입니다. 
+                    시각적인 주목도가 뛰어난 타이포그래피 조합과 고해상도 그래픽 요소를 유기적으로 연결하여 피드 속에서 가장 먼저 눈길을 사로잡는 구성을 완성했습니다.
+                </p>
+
+                <div class="capability-box">
+                    <div class="capability-title">Available Services</div>
+                    <ul class="capability-list">
+                        <li>소셜 미디어 최적화 카드뉴스 디자인 및 템플릿 제작</li>
+                        <li>피드 레이아웃을 고려한 분할 피드형 콘텐츠 기획</li>
+                        <li>트렌디한 비주얼과 텍스트 배치를 통한 가독성 극대화</li>
+                    </ul>
+                </div>
+
+                <div class="project-tags">
+                    <span class="tag">Card News</span>
+                    <span class="tag">SNS Marketing</span>
+                    <span class="tag">Instagram</span>
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="portfolio-trend.jpg" alt="Social Media Card News Editorial Design">
+            </div>
+        </section>
+
+        <section class="portfolio-section">
+            <div class="img-box">
+                <img src="portfolio-health.jpg" alt="Naver Blog Health Information Thumbnail Design">
+            </div>
+            <div class="text-box">
+                <span class="num-tag">Case 03</span>
+                <h2 class="project-title">Blog Health Thumbnail</h2>
+                <p class="project-desc">
+                    '리치건강팁' 브랜드를 위해 디자인된 고품질 네이버 블로그 썸네일 시스템입니다. 
+                    일상에 유용한 건강 정보를 유저가 직관적으로 습득할 수 있도록 가독성이 극대화된 굵직한 타이포그래피와 설득력 높은 구도를 차용해 클릭률을 극대화시켰습니다.
+                </p>
+
+                <div class="capability-box">
+                    <div class="capability-title">Available Services</div>
+                    <ul class="capability-list">
+                        <li>네이버 블로그, 유튜브 등 플랫폼별 최적화 비율의 대표 썸네일 디자인</li>
+                        <li>검색 노출을 고려한 직관적인 텍스트 강조 레이아웃 및 타이포 가공</li>
+                        <li>콘셉트 맞춤형 인물/사물 소스 합성 및 스킨 디자인</li>
+                    </ul>
+                </div>
+
+                <div class="project-tags">
+                    <span class="tag">Naver Blog</span>
+                    <span class="tag">Thumbnail</span>
+                    <span class="tag">Content Design</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio-section reverse">
+            <div class="text-box">
+                <span class="num-tag">Case 04</span>
+                <h2 class="project-title">Character Emoticon</h2>
+                <p class="project-desc">
+                    독창적인 비주얼 컨셉과 친근함으로 대중에게 일상적 힐링을 선물하는 메신저 이모티콘입니다. 
+                    일상에서 공감할 수 있는 다양한 감정 연출을 부드럽고 장난스러운 '꼬마강아지 러비' 캐릭터를 통해 풀어냈으며, 실제 메신저 플랫폼 가이드라인에 맞춘 완벽한 규격 설계와 모션 시뮬레이션을 완료했습니다.
+                </p>
+
+                <div class="capability-box">
+                    <div class="capability-title">Available Services</div>
+                    <ul class="capability-list">
+                        <li>오리지널 브랜드 캐릭터 개발 (기본형, 표정 및 동작 가이드 포함)</li>
+                        <li>주요 메신저 플랫폼 가이드라인에 맞춘 이미지 자산화</li>
+                        <li>캐릭터의 감정선을 살린 재미있고 공감 가는 메시지 제안 및 기획</li>
+                    </ul>
+                </div>
+
+                <div class="project-tags">
+                    <span class="tag">Character Design</span>
+                    <span class="tag">Emoticon</span>
+                    <span class="tag">Messenger Sticker</span>
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="이모티콘.jpg" alt="Character Emoticon Asset Board Design">
+            </div>
+        </section>
+
+        <section class="portfolio-section">
+            <div class="img-box">
+                <img src="스티커.jpg" alt="Naver OGQ Character Sticker Market Sale History Design">
+            </div>
+            <div class="text-box">
+                <span class="num-tag">Case 05</span>
+                <h2 class="project-title">OGQ Sticker Sale History</h2>
+                <p class="project-desc">
+                    단순 기획을 넘어 오리지널 캐릭터 드로잉을 실제 상업적 자산으로 가공한 커리어입니다. 
+                    사용 중이신 캐릭터를 <span class="highlight">네이버 OGQ 마켓 스티커로 정식 등록하여 판매를 완료한 이력</span>을 보유하고 있습니다. 플랫폼 승인 과정에 최적화된 규격 설계와 시장성을 입증한 비주얼 기획서입니다.
+                </p>
+
+                <div class="capability-box">
+                    <div class="capability-title">Available Services</div>
+                    <ul class="capability-list">
+                        <li>네이버 OGQ 마켓, 밴드 스티커 등 실제 마켓 런칭 및 등록 서포트</li>
+                        <li>블로그 이웃 소통, 카페 댓글 등에 특화된 실용적인 텍스트 스티커 기획</li>
+                        <li>상업용 디지털 굿즈(PNG 스티커, 다이어리 속지 등) 상품 디자인</li>
+                    </ul>
+                </div>
+
+                <div class="project-tags">
+                    <span class="tag">OGQ Sticker</span>
+                    <span class="tag">Character Sales</span>
+                    <span class="tag">Naver Market</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio-section reverse">
+            <div class="text-box">
+                <span class="num-tag">Case 06</span>
+                <h2 class="project-title">Instagram Webtoon</h2>
+                <p class="project-desc">
+                    브랜드의 비하인드 스토리나 일상의 소소하고 깊은 유쾌한 공감을 풀어낸 오리지널 인스타툰 시리즈입니다. 
+                    귀엽고 친근한 라인의 캐릭터와 명료한 자막 편집 구조를 결합해 독자들의 터치와 슬라이드를 자연스럽게 유도하고, 계정의 도달률과 양방향 소통을 유기적으로 이끄는 특화형 비주얼 콘텐츠입니다.
+                </p>
+
+                <div class="capability-box">
+                    <div class="capability-title">Available Services</div>
+                    <ul class="capability-list">
+                        <li>브랜드 공식 계정 연재용 맞춤형 브랜디드 인스타툰 기획 및 작화</li>
+                        <li>복잡한 가이드북이나 일상 툰 형식의 스토리 가공 및 콘티 구성</li>
+                        <li>소셜 미디어 채널의 인터랙션 유도형 기획 설계</li>
+                    </ul>
+                </div>
+
+                <div class="project-tags">
+                    <span class="tag">Instatoon</span>
+                    <span class="tag">Branded Webtoon</span>
+                    <span class="tag">Storytelling</span>
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="인스타툰.jpg" alt="Instagram Toon Series Graphic Design">
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <a href="index.html" class="back-link">Back to Profile</a>
+    </footer>
+
+</body>
+</html>
