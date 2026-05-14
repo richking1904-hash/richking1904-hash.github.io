@@ -157,7 +157,6 @@
             font-family: 'Noto Sans KR', sans-serif;
         }
 
-        /* 말풍선 공지창 */
         .gemi-bot-bubble {
             background-color: #4A8BB2;
             color: #ffffff;
@@ -174,7 +173,6 @@
             transition: opacity 0.3s ease;
         }
 
-        /* 말풍선 뾰족 삼각형 */
         .gemi-bot-bubble::after {
             content: '';
             position: absolute;
@@ -187,7 +185,6 @@
             width: 0;
         }
 
-        /* 둥근 대화형 버튼 */
         .gemi-bot-button {
             width: 56px;
             height: 56px;
@@ -212,7 +209,6 @@
             fill: #ffffff;
         }
 
-        /* 팝업 대화창 (PC 기준) */
         .gemi-chat-window {
             position: fixed;
             bottom: 95px;
@@ -237,7 +233,6 @@
             border: none;
         }
 
-        /* 닫기 버튼 */
         .gemi-chat-close {
             position: absolute;
             top: 12px;
@@ -266,27 +261,21 @@
             50% { transform: translateY(-5px); }
         }
 
-        /* -------------------------------------------
-           📱 모바일 전용 반응형 스타일 보정 (우측 중앙 이동)
-        -------------------------------------------- */
         @media (max-width: 600px) {
-            /* 1. 모바일에서 챗봇 버튼 위치를 우측 중앙으로 보냅니다 */
             .gemi-bot-container {
-                bottom: auto; /* 하단 고정 해제 */
-                top: 50%;     /* 화면 세로 높이의 딱 절반 위치 */
-                transform: translateY(-50%); /* 정확히 정중앙 정렬을 위한 보정 */
-                right: 16px;   /* 우측 여백 */
+                bottom: auto; 
+                top: 50%;     
+                transform: translateY(-50%); 
+                right: 16px;   
             }
 
-            /* 2. 모바일 중간에 위치하므로 말풍선 알림도 완벽하게 다시 띄웁니다! */
             .gemi-bot-bubble {
                 display: block !important;
-                font-size: 11px; /* 모바일용 크기 축소 */
+                font-size: 11px; 
                 padding: 8px 12px;
                 margin-bottom: 8px;
             }
 
-            /* 말풍선 뾰족 삼각형 위치를 버튼 중심으로 약간 우측 정렬 */
             .gemi-bot-bubble::after {
                 right: 15px;
             }
@@ -301,7 +290,6 @@
                 height: 22px;
             }
 
-            /* 3. 모바일 우측 중간에서 열리는 팝업창 위치 세팅 */
             .gemi-chat-window {
                 top: 50%;
                 bottom: auto;
@@ -337,7 +325,8 @@
                         <a href="https://www.instagram.com/gemii_jh" target="_blank" class="nav-btn" style="flex: 1;">INSTAGRAM</a>
                         <a href="https://blog.naver.com/richbab" target="_blank" class="nav-btn" style="flex: 1;">NAVER BLOG</a>
                     </div>
-                    <a href="portfolio.html" class="nav-btn portfolio-btn">PORTFOLIO</a>
+                    <!-- 👇 홍보 페이지 링크로 수정되었습니다! -->
+                    <a href="https://richking1904-hash.github.io/demo/" class="nav-btn portfolio-btn" target="_blank">PORTFOLIO</a>
                 </div>
             </div>
         </div>
